@@ -1,35 +1,56 @@
 
-Summary:	-
-Summary(pl):	-
+Summary:	Rendezvous on linux
+#Summary(pl):	We need to extend those summaries
 Name:		mDNSResponder
 Version:	98
-Release:	0.1
-License:	- (enter GPL/GPL v2/LGPL/BSD/BSD-like/other license name here)
-Vendor:		-
-Group:		-
+Release:	1
+License:	APSL
+Group:		Applications
 Source0:	http://helios.et.put.poznan.pl/~jstachow/pub/%{name}-%{version}.tar.gz
 # Source0-md5:	26ddb6f2ed2c451704d26e80da5fdcb9
-URL:		-
+Patch0:		%{name}-cflags.patch
+Patch1:		%{name}-llh.patch
+URL:		http://developer.apple.com/darwin/projects/rendezvous
 Provides:	libdns_sd.so
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
+Rendezvous is a revolutionary networking technology that lets you
+create an instant network of computers and devices without any
+configuration. It allows the services and capabilities of each device
+to be registered on the network, and allows these services to be
+dynamically discoverable by other devices on the network. Rendezvous
+enables this seamless networking and service discovery over the
+standard and ubiquitous IP networking protocol.
 
 %description -l pl
+Rendezvous to technologia konfiguracji sieci oparta o otwarty standard
+zwany Zeroconf. Pozwala ona komputerom oraz kompatybilnym urz±dzeniom
+na automatyczne odnalezienie i skonfigurowanie siê w sieci lokalnej
+oraz komunikacjê, bez pomocy administratora oraz us³ug typu DHCP czy
+DNS (st±d te¿ pojawia siê okre¶lenie 'zero-configuration').
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
 
 %build
-
 cd mDNSPosix
 
-%{__make} os=linux
-
+%{__make} os=linux \
+	CC="%{__cc}" \
+	LD="%{__ld} -shared" \
+	JDK="%{_libdir}/java" \
+	%{?debug:DEBUG=1} \
+	%{?debug:CFLAGS_DEBUG=%{debugcflags}} \
+	HAVE_IPV6=1 \
+	CFLAGS_USER="%{rpmcflags}"
 cd -
 
 %install
 
+rm -rf $RPM_BUILD_ROOT
 install -d \
 	$RPM_BUILD_ROOT{%{_includedir},/etc/rc.d/init.d,%{_sbindir}} \
 	$RPM_BUILD_ROOT{/%{_lib},%{_libdir},%{_mandir}/man{5,8}}
@@ -38,7 +59,7 @@ cd mDNSPosix
 
 install ../mDNSShared/dns_sd.h $RPM_BUILD_ROOT%{_includedir}/dns_sd.h
 install mdnsd.sh $RPM_BUILD_ROOT/etc/rc.d/init.d/mdns
-install nss_mdns.conf $RPM_BUILD_ROOT/etc/nss_mdns.conf
+install nss_mdns.conf $RPM_BUILD_ROOT%{_sysconfdir}/nss_mdns.conf
 install build/prod/mdnsd $RPM_BUILD_ROOT%{_sbindir}/mdnsd
 install build/prod/libnss_mdns-0.2.so $RPM_BUILD_ROOT/%{_lib}/libnss_mdns-0.2.so
 cd $RPM_BUILD_ROOT/%{_lib}
@@ -63,7 +84,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc README.txt
 %{_includedir}/dns_sd.h
 %attr(0754,root,root) /etc/rc.d/init.d/mdns
-%config(noreplace) %verify(not size mtime md5) /etc/nss_mdns.conf
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/nss_mdns.conf
 %attr(0755,root,root) %{_sbindir}/mdnsd
 /%{_lib}/libnss_mdns.so.2
 %attr(0755,root,root) /%{_lib}/libnss_mdns-0.2.so
