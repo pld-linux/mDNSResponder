@@ -30,6 +30,14 @@ na automatyczne odnalezienie i skonfigurowanie siê w sieci lokalnej
 oraz komunikacjê, bez pomocy administratora oraz us³ug typu DHCP czy
 DNS (st±d te¿ pojawia siê okre¶lenie 'zero-configuration').
 
+%package devel
+Summary:	Header files and develpment documentation for mDNSResponder
+Summary(pl):	Pliki nag³ówkowe i dokumetacja do mDNSResponder
+Group:		Development/Libraries
+
+%description devel
+Header files and develpment documentation for mDNSResponder.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -43,9 +51,10 @@ cd mDNSPosix
 	LD="%{__ld} -shared" \
 	JDK="%{_libdir}/java" \
 	%{?debug:DEBUG=1} \
-	%{?debug:CFLAGS_DEBUG=%{debugcflags}} \
 	HAVE_IPV6=1 \
-	CFLAGS_USER="%{rpmcflags}"
+	CFLAGS_DEBUG="%{?debug:%{debugcflags} -DMDNS_DEBUGMSGS=1} %{!?debug:%{rpmcflags}} -DMDNS_DEBUGMSGS=0" \
+	CFLAGS_USER="%{rpmcflags}" \
+	STRIP="echo"
 cd -
 
 %install
@@ -82,14 +91,17 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README.txt
-%{_includedir}/dns_sd.h
-%attr(0754,root,root) /etc/rc.d/init.d/mdns
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/nss_mdns.conf
-%attr(0755,root,root) %{_sbindir}/mdnsd
+%attr(754,root,root) /etc/rc.d/init.d/mdns
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nss_mdns.conf
+%attr(755,root,root) %{_sbindir}/mdnsd
 /%{_lib}/libnss_mdns.so.2
-%attr(0755,root,root) /%{_lib}/libnss_mdns-0.2.so
-%{_libdir}/libdns_sd.so
-%attr(0755,root,root) %{_libdir}/libdns_sd.so.1
+%attr(755,root,root) /%{_lib}/libnss_mdns-0.2.so
+%attr(755,root,root) %{_libdir}/libdns_sd.so
+%attr(755,root,root) %{_libdir}/libdns_sd.so.1
 %{_mandir}/man5/nss_mdns.conf.*
 %{_mandir}/man8/mdnsd.*
 %{_mandir}/man8/libnss_mdns.*
+
+%files devel
+%defattr(644,root,root,755)
+%{_includedir}/*
