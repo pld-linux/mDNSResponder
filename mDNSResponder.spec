@@ -10,8 +10,8 @@ Source0:	http://helios.et.put.poznan.pl/~jstachow/pub/%{name}-%{version}.tar.gz
 # Source0-md5:	26ddb6f2ed2c451704d26e80da5fdcb9
 Patch0:		%{name}-cflags.patch
 Patch1:		%{name}-llh.patch
-URL:		http://developer.apple.com/darwin/projects/rendezvous
-Provides:	libdns_sd.so
+Patch2:		%{name}-soname.patch
+URL:		http://developer.apple.com/darwin/projects/rendezvous/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -46,15 +46,15 @@ Pliki nag³ówkowe dla mDNSRespondera.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__make} -C mDNSPosix os=linux \
 	CC="%{__cc}" \
-	LD="%{__ld} -shared" \
 	JDK="%{_libdir}/java" \
 	%{?debug:DEBUG=1} \
 	HAVE_IPV6=1 \
-	CFLAGS_DEBUG="%{?debug:%{debugcflags} -DMDNS_DEBUGMSGS=1} %{!?debug:%{rpmcflags}} -DMDNS_DEBUGMSGS=0" \
+	CFLAGS_DEBUG="%{rpmcflags} -DMDNS_DEBUGMSGS=%{?debug:1}%{!?debug:0}" \
 	CFLAGS_USER="%{rpmcflags}" \
 	STRIP="echo"
 
@@ -64,23 +64,16 @@ install -d \
 	$RPM_BUILD_ROOT{%{_includedir},/etc/rc.d/init.d,%{_sbindir}} \
 	$RPM_BUILD_ROOT{/%{_lib},%{_libdir},%{_mandir}/man{5,8}}
 
-cd mDNSPosix
-
-install ../mDNSShared/dns_sd.h $RPM_BUILD_ROOT%{_includedir}/dns_sd.h
-install mdnsd.sh $RPM_BUILD_ROOT/etc/rc.d/init.d/mdns
-install nss_mdns.conf $RPM_BUILD_ROOT%{_sysconfdir}/nss_mdns.conf
-install build/prod/mdnsd $RPM_BUILD_ROOT%{_sbindir}/mdnsd
-install build/prod/libnss_mdns-0.2.so $RPM_BUILD_ROOT/%{_lib}/libnss_mdns-0.2.so
-cd $RPM_BUILD_ROOT/%{_lib}
-ln -s -f libbnss_mdns-0.2.so libnss_mdns.so.2
-cd -
-install build/prod/libdns_sd.so $RPM_BUILD_ROOT%{_libdir}/libdns_sd.so.1
-cd $RPM_BUILD_ROOT%{_libdir}
-ln -s -f libdns_sd.so.1 libdns_sd.so
-cd -
-install nss_mdns.conf.5 $RPM_BUILD_ROOT%{_mandir}/man5/nss_mdns.conf.5
-install libnss_mdns.8 $RPM_BUILD_ROOT%{_mandir}/man8/libnss_mdns.8
-install ../mDNSShared/mDNSResponder.8 $RPM_BUILD_ROOT%{_mandir}/man8/mdnsd.8
+install mDNSShared/dns_sd.h $RPM_BUILD_ROOT%{_includedir}/dns_sd.h
+install mDNSPosix/mdnsd.sh $RPM_BUILD_ROOT/etc/rc.d/init.d/mdns
+install mDNSPosix/nss_mdns.conf $RPM_BUILD_ROOT%{_sysconfdir}/nss_mdns.conf
+install mDNSPosix/build/prod/mdnsd $RPM_BUILD_ROOT%{_sbindir}/mdnsd
+install mDNSPosix/build/prod/libnss_mdns-0.2.so $RPM_BUILD_ROOT/%{_lib}/libnss_mdns-0.2.so
+install mDNSPosix/build/prod/libdns_sd.so $RPM_BUILD_ROOT%{_libdir}/libdns_sd.so.1
+ln -sf libdns_sd.so.1 $RPM_BUILD_ROOT%{_libdir}/libdns_sd.so
+install mDNSPosix/nss_mdns.conf.5 $RPM_BUILD_ROOT%{_mandir}/man5/nss_mdns.conf.5
+install mDNSPosix/libnss_mdns.8 $RPM_BUILD_ROOT%{_mandir}/man8/libnss_mdns.8
+install mDNSShared/mDNSResponder.8 $RPM_BUILD_ROOT%{_mandir}/man8/mdnsd.8
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -94,14 +87,13 @@ rm -rf $RPM_BUILD_ROOT
 %attr(754,root,root) /etc/rc.d/init.d/mdns
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nss_mdns.conf
 %attr(755,root,root) %{_sbindir}/mdnsd
-/%{_lib}/libnss_mdns.so.2
 %attr(755,root,root) /%{_lib}/libnss_mdns-0.2.so
-%attr(755,root,root) %{_libdir}/libdns_sd.so
 %attr(755,root,root) %{_libdir}/libdns_sd.so.1
-%{_mandir}/man5/nss_mdns.conf.*
-%{_mandir}/man8/mdnsd.*
-%{_mandir}/man8/libnss_mdns.*
+%{_mandir}/man5/nss_mdns.conf.5*
+%{_mandir}/man8/mdnsd.8*
+%{_mandir}/man8/libnss_mdns.8*
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/*
+%attr(755,root,root) %{_libdir}/libdns_sd.so
+%{_includedir}/*.h
