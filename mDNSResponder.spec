@@ -10,6 +10,7 @@ Group:		-
 Source0:	http://helios.et.put.poznan.pl/~jstachow/pub/%{name}-%{version}.tar.gz
 # Source0-md5:	26ddb6f2ed2c451704d26e80da5fdcb9
 URL:		-
+Provides:	libdns_sd.so
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
