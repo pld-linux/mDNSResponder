@@ -1,6 +1,6 @@
-
-Summary:	Rendezvous on linux
-#Summary(pl):	We need to extend those summaries
+# TODO: We need to extend those summaries
+Summary:	Rendezvous on Linux
+Summary(pl):	Rendezvous pod Linuksem
 Name:		mDNSResponder
 Version:	98
 Release:	1
@@ -31,12 +31,16 @@ oraz komunikacjê, bez pomocy administratora oraz us³ug typu DHCP czy
 DNS (st±d te¿ pojawia siê okre¶lenie 'zero-configuration').
 
 %package devel
-Summary:	Header files and develpment documentation for mDNSResponder
-Summary(pl):	Pliki nag³ówkowe i dokumetacja do mDNSResponder
+Summary:	Header files for mDNSResponder
+Summary(pl):	Pliki nag³ówkowe do mDNSRespondera
 Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
-Header files and develpment documentation for mDNSResponder.
+Header files for mDNSResponder.
+
+%description devel -l pl
+Pliki nag³ówkowe dla mDNSRespondera.
 
 %prep
 %setup -q
@@ -44,9 +48,7 @@ Header files and develpment documentation for mDNSResponder.
 %patch1 -p1
 
 %build
-cd mDNSPosix
-
-%{__make} os=linux \
+%{__make} -C mDNSPosix os=linux \
 	CC="%{__cc}" \
 	LD="%{__ld} -shared" \
 	JDK="%{_libdir}/java" \
@@ -55,10 +57,8 @@ cd mDNSPosix
 	CFLAGS_DEBUG="%{?debug:%{debugcflags} -DMDNS_DEBUGMSGS=1} %{!?debug:%{rpmcflags}} -DMDNS_DEBUGMSGS=0" \
 	CFLAGS_USER="%{rpmcflags}" \
 	STRIP="echo"
-cd -
 
 %install
-
 rm -rf $RPM_BUILD_ROOT
 install -d \
 	$RPM_BUILD_ROOT{%{_includedir},/etc/rc.d/init.d,%{_sbindir}} \
