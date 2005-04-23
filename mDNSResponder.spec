@@ -3,7 +3,7 @@ Summary:	Rendezvous on Linux
 Summary(pl):	Rendezvous pod Linuksem
 Name:		mDNSResponder
 Version:	98
-Release:	1
+Release:	2
 License:	APSL
 Group:		Applications
 Source0:	http://helios.et.put.poznan.pl/~jstachow/pub/%{name}-%{version}.tar.gz
@@ -11,6 +11,7 @@ Source0:	http://helios.et.put.poznan.pl/~jstachow/pub/%{name}-%{version}.tar.gz
 Patch0:		%{name}-cflags.patch
 Patch1:		%{name}-llh.patch
 Patch2:		%{name}-soname.patch
+Patch3:		%{name}-alpha.patch
 URL:		http://developer.apple.com/darwin/projects/rendezvous/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -47,6 +48,7 @@ Pliki nag³ówkowe dla mDNSRespondera.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %{__make} -C mDNSPosix os=linux \
