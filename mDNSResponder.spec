@@ -2,12 +2,12 @@
 Summary:	Rendezvous on Linux
 Summary(pl):	Rendezvous pod Linuksem
 Name:		mDNSResponder
-Version:	98
-Release:	3
+Version:	107
+Release:	1
 License:	APSL
 Group:		Applications
 Source0:	http://helios.et.put.poznan.pl/~jstachow/pub/%{name}-%{version}.tar.gz
-# Source0-md5:	26ddb6f2ed2c451704d26e80da5fdcb9
+# Source0-md5:	3bf9551c2db77cd00c193f8b423c9241
 Patch0:		%{name}-cflags.patch
 Patch1:		%{name}-llh.patch
 Patch2:		%{name}-soname.patch
