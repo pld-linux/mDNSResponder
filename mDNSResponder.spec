@@ -3,7 +3,7 @@ Summary:	Rendezvous on Linux
 Summary(pl):	Rendezvous pod Linuksem
 Name:		mDNSResponder
 Version:	107
-Release:	1
+Release:	2
 License:	APSL
 Group:		Applications
 Source0:	http://helios.et.put.poznan.pl/~jstachow/pub/%{name}-%{version}.tar.gz
@@ -35,12 +35,51 @@ DNS (st±d te¿ pojawia siê okre¶lenie 'zero-configuration').
 Summary:	Header files for mDNSResponder
 Summary(pl):	Pliki nag³ówkowe do mDNSRespondera
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}-libs = %{version}-%{release}
 
 %description devel
 Header files for mDNSResponder.
 
 %description devel -l pl
+Pliki nag³ówkowe dla mDNSRespondera.
+
+%package libs
+Summary:	Libraries for mDNSResponder
+Summary(pl):	Biblioteki do mDNSRespondera
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
+Conflicts:	mDNSResponder < 107-2
+
+%description libs
+Libraries for mDNSResponder.
+
+%description libs -l pl
+Biblioteki dla mDNSRespondera
+
+%package tools
+Summary:	Tools for mDNSResponder
+Summary(pl):	Narzêdzia do mDNSRespondera
+Group:		Development/Libraries
+Requires:	%{name}-libs = %{version}-%{release}
+Conflicts:	mDNSResponder < 107-2
+
+%description tools
+Tools for mDNSResponder.
+
+%description libs -l pl
+Narzêdzia dla mDNSRespondera
+
+%package -n nss_mdns
+Summary:	Header files for mDNSResponder
+Summary(pl):	Pliki nag³ówkowe do mDNSRespondera
+Group:		Development/Libraries
+#Requires:	%{name} = %{version}-%{release}
+Conflicts:	mDNSResponder < 107-2
+
+%description -n nss_mdns
+Header files for mDNSResponder.
+
+%description -n nss_mdns -l pl
 Pliki nag³ówkowe dla mDNSRespondera.
 
 %prep
@@ -64,38 +103,58 @@ Pliki nag³ówkowe dla mDNSRespondera.
 rm -rf $RPM_BUILD_ROOT
 install -d \
 	$RPM_BUILD_ROOT{%{_includedir},/etc/rc.d/init.d,%{_sbindir}} \
-	$RPM_BUILD_ROOT{/%{_lib},%{_libdir},%{_mandir}/man{5,8}}
+	$RPM_BUILD_ROOT{/%{_lib},%{_libdir},%{_mandir}/man{5,8}} \
+	$RPM_BUILD_ROOT%{_bindir}
 
 install mDNSShared/dns_sd.h $RPM_BUILD_ROOT%{_includedir}/dns_sd.h
 install mDNSPosix/mdnsd.sh $RPM_BUILD_ROOT/etc/rc.d/init.d/mdns
 install mDNSPosix/nss_mdns.conf $RPM_BUILD_ROOT%{_sysconfdir}/nss_mdns.conf
 install mDNSPosix/build/prod/mdnsd $RPM_BUILD_ROOT%{_sbindir}/mdnsd
+install mDNSPosix/build/prod/dnsextd $RPM_BUILD_ROOT%{_sbindir}/dnsextd
+install mDNSPosix/build/prod/mDNS* $RPM_BUILD_ROOT%{_bindir}
 install mDNSPosix/build/prod/libnss_mdns-0.2.so $RPM_BUILD_ROOT/%{_lib}/libnss_mdns-0.2.so
 install mDNSPosix/build/prod/libdns_sd.so $RPM_BUILD_ROOT%{_libdir}/libdns_sd.so.1
 ln -sf libdns_sd.so.1 $RPM_BUILD_ROOT%{_libdir}/libdns_sd.so
 install mDNSPosix/nss_mdns.conf.5 $RPM_BUILD_ROOT%{_mandir}/man5/nss_mdns.conf.5
 install mDNSPosix/libnss_mdns.8 $RPM_BUILD_ROOT%{_mandir}/man8/libnss_mdns.8
 install mDNSShared/mDNSResponder.8 $RPM_BUILD_ROOT%{_mandir}/man8/mdnsd.8
+install mDNSShared/dnsextd.8 $RPM_BUILD_ROOT%{_mandir}/man8/dnsextd.8
+
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p /sbin/ldconfig
-%postun	-p /sbin/ldconfig
+%post	libs -p /sbin/ldconfig
+%postun	libs -p /sbin/ldconfig
+
+%post	-n nss_mdns -p /sbin/ldconfig
+%postun	-n nss_mdns -p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
 %doc README.txt
 %attr(754,root,root) /etc/rc.d/init.d/mdns
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nss_mdns.conf
 %attr(755,root,root) %{_sbindir}/mdnsd
-%attr(755,root,root) /%{_lib}/libnss_mdns-0.2.so
-%attr(755,root,root) %{_libdir}/libdns_sd.so.1
-%{_mandir}/man5/nss_mdns.conf.5*
+%attr(755,root,root) %{_sbindir}/dnsextd
 %{_mandir}/man8/mdnsd.8*
+%{_mandir}/man8/dnsextd.8*
+
+%files -n nss_mdns
+%defattr(644,root,root,755)
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nss_mdns.conf
+%attr(755,root,root) /%{_lib}/libnss_mdns-0.2.so
+%{_mandir}/man5/nss_mdns.conf.5*
 %{_mandir}/man8/libnss_mdns.8*
+
+%files libs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libdns_sd.so.1
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libdns_sd.so
 %{_includedir}/*.h
+
+%files tools
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/mDNS*
