@@ -47,7 +47,6 @@ Pliki nag³ówkowe dla mDNSRespondera.
 Summary:	Libraries for mDNSResponder
 Summary(pl):	Biblioteki do mDNSRespondera
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
 Conflicts:	mDNSResponder < 107-2
 
 %description libs
