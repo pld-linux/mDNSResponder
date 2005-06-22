@@ -44,16 +44,16 @@ Header files for mDNSResponder.
 Pliki nag³ówkowe dla mDNSRespondera.
 
 %package libs
-Summary:	Libraries for mDNSResponder
-Summary(pl):	Biblioteki do mDNSRespondera
+Summary:	mDNSResponder library
+Summary(pl):	Biblioteka mDNSRespondera
 Group:		Development/Libraries
 Conflicts:	mDNSResponder < 107-2
 
 %description libs
-Libraries for mDNSResponder.
+mDNSResponder library.
 
 %description libs -l pl
-Biblioteki dla mDNSRespondera
+Biblioteka mDNSRespondera.
 
 %package tools
 Summary:	Tools for mDNSResponder
@@ -65,21 +65,21 @@ Conflicts:	mDNSResponder < 107-2
 %description tools
 Tools for mDNSResponder.
 
-%description libs -l pl
-Narzêdzia dla mDNSRespondera
+%description tools -l pl
+Narzêdzia dla mDNSRespondera.
 
 %package -n nss_mdns
-Summary:	Header files for mDNSResponder
-Summary(pl):	Pliki nag³ówkowe do mDNSRespondera
+Summary:	mDNSResponder NSS module
+Summary(pl):	Modu³ NSS korzystaj±cy z mDNSRespondera
 Group:		Development/Libraries
 #Requires:	%{name} = %{version}-%{release}
 Conflicts:	mDNSResponder < 107-2
 
 %description -n nss_mdns
-Header files for mDNSResponder.
+mDNSResponder NSS module.
 
 %description -n nss_mdns -l pl
-Pliki nag³ówkowe dla mDNSRespondera.
+Modu³ NSS korzystaj±cy z mDNSRespondera.
 
 %prep
 %setup -q
