@@ -12,6 +12,7 @@ Patch0:		%{name}-cflags.patch
 Patch1:		%{name}-llh.patch
 Patch2:		%{name}-soname.patch
 Patch3:		%{name}-alpha.patch
+PreReq:		rc-scripts
 URL:		http://developer.apple.com/darwin/projects/rendezvous/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
