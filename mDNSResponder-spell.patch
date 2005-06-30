@@ -1,0 +1,8 @@
+--- mDNSResponder-107/mDNSPosix/nss_mdns.conf	2005-07-01 01:50:22.000000000 +0300
++++ mDNSResponder-107/mDNSPosix/nss_mdns.conf~	2005-04-20 23:12:17.000000000 +0300
+@@ -1,4 +1,4 @@
+-# Defaut configuration file for nss_mdns
++# Default configuration file for nss_mdns
+ 
+ # Applicable domains
+ domain local
