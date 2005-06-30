@@ -12,6 +12,7 @@ Patch0:		%{name}-cflags.patch
 Patch1:		%{name}-llh.patch
 Patch2:		%{name}-soname.patch
 Patch3:		%{name}-alpha.patch
+Patch4:		%{name}-spell.patch
 PreReq:		rc-scripts
 URL:		http://developer.apple.com/darwin/projects/rendezvous/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -88,6 +89,7 @@ Modu³ NSS korzystaj±cy z mDNSRespondera.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__make} -C mDNSPosix os=linux \
