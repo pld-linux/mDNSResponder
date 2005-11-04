@@ -3,7 +3,7 @@ Summary:	Rendezvous on Linux
 Summary(pl):	Rendezvous pod Linuksem
 Name:		mDNSResponder
 Version:	107
-Release:	2
+Release:	2.1
 License:	APSL
 Group:		Applications
 Source0:	http://helios.et.put.poznan.pl/~jstachow/pub/%{name}-%{version}.tar.gz
@@ -50,7 +50,6 @@ Pliki nag³ówkowe dla mDNSRespondera.
 Summary:	mDNSResponder library
 Summary(pl):	Biblioteka mDNSRespondera
 Group:		Development/Libraries
-Conflicts:	mDNSResponder < 107-2
 
 %description libs
 mDNSResponder library.
@@ -63,7 +62,6 @@ Summary:	Tools for mDNSResponder
 Summary(pl):	Narzêdzia do mDNSRespondera
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Conflicts:	mDNSResponder < 107-2
 
 %description tools
 Tools for mDNSResponder.
@@ -76,7 +74,6 @@ Summary:	mDNSResponder NSS module
 Summary(pl):	Modu³ NSS korzystaj±cy z mDNSRespondera
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Conflicts:	mDNSResponder < 107-2
 
 %description -n nss_mdns
 mDNSResponder NSS module.
