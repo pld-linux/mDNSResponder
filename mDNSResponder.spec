@@ -13,7 +13,8 @@ Patch1:		%{name}-llh.patch
 Patch2:		%{name}-soname.patch
 Patch3:		%{name}-alpha.patch
 Patch4:		%{name}-spell.patch
-PreReq:		rc-scripts
+Requires:	rc-scripts
+Requires:	%{name}-libs = %{version}-%{release}
 URL:		http://developer.apple.com/darwin/projects/rendezvous/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -74,7 +75,7 @@ Narzêdzia dla mDNSRespondera.
 Summary:	mDNSResponder NSS module
 Summary(pl):	Modu³ NSS korzystaj±cy z mDNSRespondera
 Group:		Development/Libraries
-#Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}-libs = %{version}-%{release}
 Conflicts:	mDNSResponder < 107-2
 
 %description -n nss_mdns
