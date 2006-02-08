@@ -6,16 +6,16 @@ Version:	107
 Release:	3
 License:	APSL
 Group:		Applications
-Source0:	http://helios.et.put.poznan.pl/~jstachow/pub/%{name}-%{version}.tar.gz
+Source0:	http://darwinsource.opendarwin.org/tarballs/apsl/%{name}-%{version}.tar.gz
 # Source0-md5:	3bf9551c2db77cd00c193f8b423c9241
 Patch0:		%{name}-cflags.patch
 Patch1:		%{name}-llh.patch
 Patch2:		%{name}-soname.patch
 Patch3:		%{name}-alpha.patch
 Patch4:		%{name}-spell.patch
+URL:		http://developer.apple.com/darwin/projects/rendezvous/
 Requires:	rc-scripts
 Requires:	%{name}-libs = %{version}-%{release}
-URL:		http://developer.apple.com/darwin/projects/rendezvous/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
