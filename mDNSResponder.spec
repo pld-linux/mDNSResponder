@@ -3,7 +3,7 @@ Summary:	Rendezvous on Linux
 Summary(pl):	Rendezvous pod Linuksem
 Name:		mDNSResponder
 Version:	107
-Release:	3
+Release:	4
 License:	APSL
 Group:		Applications
 Source0:	http://darwinsource.opendarwin.org/tarballs/apsl/%{name}-%{version}.tar.gz
@@ -39,6 +39,8 @@ Summary:	Header files for mDNSResponder
 Summary(pl):	Pliki nag³ówkowe do mDNSRespondera
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
+Provides:	mdns-bonjour-devel
+Obsoletes:	avahi-compat-libdns_sd-devel
 
 %description devel
 Header files for mDNSResponder.
@@ -50,6 +52,8 @@ Pliki nag³ówkowe dla mDNSRespondera.
 Summary:	mDNSResponder library
 Summary(pl):	Biblioteka mDNSRespondera
 Group:		Development/Libraries
+Provides:	mdns-bonjour
+Obsoletes:	avahi-compat-libdns_sd
 
 %description libs
 mDNSResponder library.
