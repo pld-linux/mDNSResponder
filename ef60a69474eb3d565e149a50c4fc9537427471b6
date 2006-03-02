@@ -1,0 +1,3 @@
+- adapterized, finished most sections, rel. 1 for our needs (we could
+  package at least the java client in the future though - they're in
+  the tarball)
