@@ -14,8 +14,9 @@ Patch2:		%{name}-soname.patch
 Patch3:		%{name}-alpha.patch
 Patch4:		%{name}-spell.patch
 URL:		http://developer.apple.com/darwin/projects/rendezvous/
-Requires:	rc-scripts
+Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name}-libs = %{version}-%{release}
+Requires:	rc-scripts
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -124,9 +125,18 @@ install mDNSPosix/libnss_mdns.8 $RPM_BUILD_ROOT%{_mandir}/man8/libnss_mdns.8
 install mDNSShared/mDNSResponder.8 $RPM_BUILD_ROOT%{_mandir}/man8/mdnsd.8
 install mDNSShared/dnsextd.8 $RPM_BUILD_ROOT%{_mandir}/man8/dnsextd.8
 
-
 %clean
 rm -rf $RPM_BUILD_ROOT
+
+%post
+/sbin/chkconfig --add mdns
+%service mdns restart
+
+%preun
+if [ "$1" = "0" ]; then
+	%service jabber-aimtrans mdns
+	/sbin/chkconfig --del mdns
+fi
 
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
