@@ -1,18 +1,16 @@
-# TODO: We need to extend those summaries
-Summary:	Rendezvous on Linux
-Summary(pl):	Rendezvous pod Linuksem
+Summary:	Rendezvous - DNS Service Discovery
+Summary(pl):	Rendezvous - wykrywanie us³ug w oparciu o DNS
 Name:		mDNSResponder
-Version:	107
-Release:	4
+Version:	108
+Release:	1
 License:	APSL
 Group:		Applications
 Source0:	http://darwinsource.opendarwin.org/tarballs/apsl/%{name}-%{version}.tar.gz
-# Source0-md5:	3bf9551c2db77cd00c193f8b423c9241
+# Source0-md5:	645eda2dd5d465b8dabedc3b87e1b31a
 Patch0:		%{name}-cflags.patch
-Patch1:		%{name}-llh.patch
-Patch2:		%{name}-soname.patch
-Patch3:		%{name}-alpha.patch
-Patch4:		%{name}-spell.patch
+Patch1:		%{name}-soname.patch
+Patch2:		%{name}-alpha.patch
+Patch3:		%{name}-spell.patch
 URL:		http://developer.apple.com/darwin/projects/rendezvous/
 Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name}-libs = %{version}-%{release}
@@ -35,6 +33,19 @@ na automatyczne odnalezienie i skonfigurowanie siê w sieci lokalnej
 oraz komunikacjê, bez pomocy administratora oraz us³ug typu DHCP czy
 DNS (st±d te¿ pojawia siê okre¶lenie 'zero-configuration').
 
+%package libs
+Summary:	mDNSResponder library
+Summary(pl):	Biblioteka mDNSRespondera
+Group:		Development/Libraries
+Provides:	mdns-bonjour
+Obsoletes:	avahi-compat-libdns_sd
+
+%description libs
+mDNSResponder library.
+
+%description libs -l pl
+Biblioteka mDNSRespondera.
+
 %package devel
 Summary:	Header files for mDNSResponder
 Summary(pl):	Pliki nag³ówkowe do mDNSRespondera
@@ -48,19 +59,6 @@ Header files for mDNSResponder.
 
 %description devel -l pl
 Pliki nag³ówkowe dla mDNSRespondera.
-
-%package libs
-Summary:	mDNSResponder library
-Summary(pl):	Biblioteka mDNSRespondera
-Group:		Development/Libraries
-Provides:	mdns-bonjour
-Obsoletes:	avahi-compat-libdns_sd
-
-%description libs
-mDNSResponder library.
-
-%description libs -l pl
-Biblioteka mDNSRespondera.
 
 %package tools
 Summary:	Tools for mDNSResponder
@@ -92,10 +90,10 @@ Modu³ NSS korzystaj±cy z mDNSRespondera.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 %build
-%{__make} -C mDNSPosix os=linux \
+%{__make} -C mDNSPosix \
+	os=linux \
 	CC="%{__cc}" \
 	JDK="%{_libdir}/java" \
 	%{?debug:DEBUG=1} \
@@ -146,22 +144,15 @@ fi
 
 %files
 %defattr(644,root,root,755)
-%doc README.txt
 %attr(754,root,root) /etc/rc.d/init.d/mdns
 %attr(755,root,root) %{_sbindir}/mdnsd
 %attr(755,root,root) %{_sbindir}/dnsextd
 %{_mandir}/man8/mdnsd.8*
 %{_mandir}/man8/dnsextd.8*
 
-%files -n nss_mdns
-%defattr(644,root,root,755)
-%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nss_mdns.conf
-%attr(755,root,root) /%{_lib}/libnss_mdns-0.2.so
-%{_mandir}/man5/nss_mdns.conf.5*
-%{_mandir}/man8/libnss_mdns.8*
-
 %files libs
 %defattr(644,root,root,755)
+%doc APPLE_LICENSE README.txt
 %attr(755,root,root) %{_libdir}/libdns_sd.so.1
 
 %files devel
@@ -172,3 +163,10 @@ fi
 %files tools
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/mDNS*
+
+%files -n nss_mdns
+%defattr(644,root,root,755)
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/nss_mdns.conf
+%attr(755,root,root) /%{_lib}/libnss_mdns-0.2.so
+%{_mandir}/man5/nss_mdns.conf.5*
+%{_mandir}/man8/libnss_mdns.8*
