@@ -39,7 +39,7 @@ Summary(pl):	Biblioteka mDNSRespondera
 Group:		Development/Libraries
 Provides:	mdns-bonjour
 Obsoletes:	avahi-compat-libdns_sd
-Conflicts:	%{name} < 107-2
+Conflicts:	mDNSResponder < 107-2
 
 %description libs
 mDNSResponder library.
