@@ -3,7 +3,7 @@ Summary:	Rendezvous on Linux
 Summary(pl):	Rendezvous pod Linuksem
 Name:		mDNSResponder
 Version:	107
-Release:	2
+Release:	4
 License:	APSL
 Group:		Applications
 Source0:	http://helios.et.put.poznan.pl/~jstachow/pub/%{name}-%{version}.tar.gz
@@ -12,7 +12,9 @@ Patch0:		%{name}-cflags.patch
 Patch1:		%{name}-llh.patch
 Patch2:		%{name}-soname.patch
 Patch3:		%{name}-alpha.patch
-PreReq:		rc-scripts
+Patch4:		%{name}-spell.patch
+Requires:	rc-scripts
+Requires:	%{name}-libs = %{version}-%{release}
 URL:		http://developer.apple.com/darwin/projects/rendezvous/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -48,7 +50,7 @@ Pliki nag³ówkowe dla mDNSRespondera.
 Summary:	mDNSResponder library
 Summary(pl):	Biblioteka mDNSRespondera
 Group:		Development/Libraries
-Conflicts:	mDNSResponder < 107-2
+Conflicts:	%{name} < 107-2
 
 %description libs
 mDNSResponder library.
@@ -61,7 +63,6 @@ Summary:	Tools for mDNSResponder
 Summary(pl):	Narzêdzia do mDNSRespondera
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Conflicts:	mDNSResponder < 107-2
 
 %description tools
 Tools for mDNSResponder.
@@ -73,8 +74,7 @@ Narzêdzia dla mDNSRespondera.
 Summary:	mDNSResponder NSS module
 Summary(pl):	Modu³ NSS korzystaj±cy z mDNSRespondera
 Group:		Development/Libraries
-#Requires:	%{name} = %{version}-%{release}
-Conflicts:	mDNSResponder < 107-2
+Requires:	%{name}-libs = %{version}-%{release}
 
 %description -n nss_mdns
 mDNSResponder NSS module.
@@ -88,6 +88,7 @@ Modu³ NSS korzystaj±cy z mDNSRespondera.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__make} -C mDNSPosix os=linux \
