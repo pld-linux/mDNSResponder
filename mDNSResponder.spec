@@ -2,7 +2,7 @@ Summary:	Rendezvous - DNS Service Discovery
 Summary(pl):	Rendezvous - wykrywanie us³ug w oparciu o DNS
 Name:		mDNSResponder
 Version:	108
-Release:	1
+Release:	2
 License:	APSL
 Group:		Applications
 Source0:	http://darwinsource.opendarwin.org/tarballs/apsl/%{name}-%{version}.tar.gz
@@ -39,6 +39,7 @@ Summary(pl):	Biblioteka mDNSRespondera
 Group:		Development/Libraries
 Provides:	mdns-bonjour
 Obsoletes:	avahi-compat-libdns_sd
+Conflicts:	%{name} < 107-2
 
 %description libs
 mDNSResponder library.
