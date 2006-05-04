@@ -2,11 +2,12 @@ Summary:	Rendezvous - DNS Service Discovery
 Summary(pl):	Rendezvous - wykrywanie us³ug w oparciu o DNS
 Name:		mDNSResponder
 Version:	108
-Release:	3
+Release:	4
 License:	APSL
 Group:		Applications
 Source0:	http://darwinsource.opendarwin.org/tarballs/apsl/%{name}-%{version}.tar.gz
 # Source0-md5:	645eda2dd5d465b8dabedc3b87e1b31a
+Source1:	mDNSResponder.init
 Patch0:		%{name}-cflags.patch
 Patch1:		%{name}-soname.patch
 Patch2:		%{name}-alpha.patch
@@ -111,7 +112,7 @@ install -d \
 	$RPM_BUILD_ROOT%{_bindir}
 
 install mDNSShared/dns_sd.h $RPM_BUILD_ROOT%{_includedir}/dns_sd.h
-install mDNSPosix/mdnsd.sh $RPM_BUILD_ROOT/etc/rc.d/init.d/mdns
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/mdns
 install mDNSPosix/nss_mdns.conf $RPM_BUILD_ROOT%{_sysconfdir}/nss_mdns.conf
 install mDNSPosix/build/prod/mdnsd $RPM_BUILD_ROOT%{_sbindir}/mdnsd
 install mDNSPosix/build/prod/dnsextd $RPM_BUILD_ROOT%{_sbindir}/dnsextd
