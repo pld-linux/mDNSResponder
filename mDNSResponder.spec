@@ -2,7 +2,7 @@ Summary:	Rendezvous - DNS Service Discovery
 Summary(pl):	Rendezvous - wykrywanie us³ug w oparciu o DNS
 Name:		mDNSResponder
 Version:	108
-Release:	4
+Release:	5
 License:	APSL
 Group:		Applications
 Source0:	http://darwinsource.opendarwin.org/tarballs/apsl/%{name}-%{version}.tar.gz
