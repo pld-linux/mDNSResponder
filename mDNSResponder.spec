@@ -2,7 +2,7 @@ Summary:	Rendezvous - DNS Service Discovery
 Summary(pl):	Rendezvous - wykrywanie us³ug w oparciu o DNS
 Name:		mDNSResponder
 Version:	108
-Release:	5
+Release:	6
 License:	APSL
 Group:		Applications
 Source0:	http://darwinsource.opendarwin.org/tarballs/apsl/%{name}-%{version}.tar.gz
@@ -118,8 +118,8 @@ install mDNSPosix/build/prod/mdnsd $RPM_BUILD_ROOT%{_sbindir}/mdnsd
 install mDNSPosix/build/prod/dnsextd $RPM_BUILD_ROOT%{_sbindir}/dnsextd
 install mDNSPosix/build/prod/mDNS* $RPM_BUILD_ROOT%{_bindir}
 install mDNSPosix/build/prod/libnss_mdns-0.2.so $RPM_BUILD_ROOT/%{_lib}/libnss_mdns-0.2.so
-install mDNSPosix/build/prod/libdns_sd.so $RPM_BUILD_ROOT%{_libdir}/libdns_sd.so.1
-ln -sf libdns_sd.so.1 $RPM_BUILD_ROOT%{_libdir}/libdns_sd.so
+install mDNSPosix/build/prod/libdns_sd.so $RPM_BUILD_ROOT%{_libdir}/libdns_sd.so.1.0.0
+ln -sf libdns_sd.so.1.0.0 $RPM_BUILD_ROOT%{_libdir}/libdns_sd.so
 install mDNSPosix/nss_mdns.conf.5 $RPM_BUILD_ROOT%{_mandir}/man5/nss_mdns.conf.5
 install mDNSPosix/libnss_mdns.8 $RPM_BUILD_ROOT%{_mandir}/man8/libnss_mdns.8
 install mDNSShared/mDNSResponder.8 $RPM_BUILD_ROOT%{_mandir}/man8/mdnsd.8
@@ -155,7 +155,7 @@ fi
 %files libs
 %defattr(644,root,root,755)
 %doc APPLE_LICENSE README.txt
-%attr(755,root,root) %{_libdir}/libdns_sd.so.1
+%attr(755,root,root) %{_libdir}/libdns_sd.so.1.0.0
 
 %files devel
 %defattr(644,root,root,755)
