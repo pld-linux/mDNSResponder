@@ -1,5 +1,5 @@
 Summary:	Rendezvous - DNS Service Discovery
-Summary(pl):	Rendezvous - wykrywanie us³ug w oparciu o DNS
+Summary(pl.UTF-8):   Rendezvous - wykrywanie usÅ‚ug w oparciu o DNS
 Name:		mDNSResponder
 Version:	108
 Release:	6
@@ -27,16 +27,16 @@ dynamically discoverable by other devices on the network. Rendezvous
 enables this seamless networking and service discovery over the
 standard and ubiquitous IP networking protocol.
 
-%description -l pl
+%description -l pl.UTF-8
 Rendezvous to technologia konfiguracji sieci oparta o otwarty standard
-zwany Zeroconf. Pozwala ona komputerom oraz kompatybilnym urz±dzeniom
-na automatyczne odnalezienie i skonfigurowanie siê w sieci lokalnej
-oraz komunikacjê, bez pomocy administratora oraz us³ug typu DHCP czy
-DNS (st±d te¿ pojawia siê okre¶lenie 'zero-configuration').
+zwany Zeroconf. Pozwala ona komputerom oraz kompatybilnym urzÄ…dzeniom
+na automatyczne odnalezienie i skonfigurowanie siÄ™ w sieci lokalnej
+oraz komunikacjÄ™, bez pomocy administratora oraz usÅ‚ug typu DHCP czy
+DNS (stÄ…d teÅ¼ pojawia siÄ™ okreÅ›lenie 'zero-configuration').
 
 %package libs
 Summary:	mDNSResponder library
-Summary(pl):	Biblioteka mDNSRespondera
+Summary(pl.UTF-8):   Biblioteka mDNSRespondera
 Group:		Development/Libraries
 Provides:	mdns-bonjour
 Obsoletes:	avahi-compat-libdns_sd
@@ -45,12 +45,12 @@ Conflicts:	mDNSResponder < 107-2
 %description libs
 mDNSResponder library.
 
-%description libs -l pl
+%description libs -l pl.UTF-8
 Biblioteka mDNSRespondera.
 
 %package devel
 Summary:	Header files for mDNSResponder
-Summary(pl):	Pliki nag³ówkowe do mDNSRespondera
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe do mDNSRespondera
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Provides:	mdns-bonjour-devel
@@ -59,32 +59,32 @@ Obsoletes:	avahi-compat-libdns_sd-devel
 %description devel
 Header files for mDNSResponder.
 
-%description devel -l pl
-Pliki nag³ówkowe dla mDNSRespondera.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe dla mDNSRespondera.
 
 %package tools
 Summary:	Tools for mDNSResponder
-Summary(pl):	Narzêdzia do mDNSRespondera
+Summary(pl.UTF-8):   NarzÄ™dzia do mDNSRespondera
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 
 %description tools
 Tools for mDNSResponder.
 
-%description tools -l pl
-Narzêdzia dla mDNSRespondera.
+%description tools -l pl.UTF-8
+NarzÄ™dzia dla mDNSRespondera.
 
 %package -n nss_mdns
 Summary:	mDNSResponder NSS module
-Summary(pl):	Modu³ NSS korzystaj±cy z mDNSRespondera
+Summary(pl.UTF-8):   ModuÅ‚ NSS korzystajÄ…cy z mDNSRespondera
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 
 %description -n nss_mdns
 mDNSResponder NSS module.
 
-%description -n nss_mdns -l pl
-Modu³ NSS korzystaj±cy z mDNSRespondera.
+%description -n nss_mdns -l pl.UTF-8
+ModuÅ‚ NSS korzystajÄ…cy z mDNSRespondera.
 
 %prep
 %setup -q
