@@ -1,5 +1,5 @@
 Summary:	Rendezvous - DNS Service Discovery
-Summary(pl.UTF-8):   Rendezvous - wykrywanie usług w oparciu o DNS
+Summary(pl.UTF-8):	Rendezvous - wykrywanie usług w oparciu o DNS
 Name:		mDNSResponder
 Version:	108
 Release:	6
@@ -36,7 +36,7 @@ DNS (stąd też pojawia się określenie 'zero-configuration').
 
 %package libs
 Summary:	mDNSResponder library
-Summary(pl.UTF-8):   Biblioteka mDNSRespondera
+Summary(pl.UTF-8):	Biblioteka mDNSRespondera
 Group:		Development/Libraries
 Provides:	mdns-bonjour
 Obsoletes:	avahi-compat-libdns_sd
@@ -50,7 +50,7 @@ Biblioteka mDNSRespondera.
 
 %package devel
 Summary:	Header files for mDNSResponder
-Summary(pl.UTF-8):   Pliki nagłówkowe do mDNSRespondera
+Summary(pl.UTF-8):	Pliki nagłówkowe do mDNSRespondera
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Provides:	mdns-bonjour-devel
@@ -64,7 +64,7 @@ Pliki nagłówkowe dla mDNSRespondera.
 
 %package tools
 Summary:	Tools for mDNSResponder
-Summary(pl.UTF-8):   Narzędzia do mDNSRespondera
+Summary(pl.UTF-8):	Narzędzia do mDNSRespondera
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 
@@ -76,7 +76,7 @@ Narzędzia dla mDNSRespondera.
 
 %package -n nss_mdns
 Summary:	mDNSResponder NSS module
-Summary(pl.UTF-8):   Moduł NSS korzystający z mDNSRespondera
+Summary(pl.UTF-8):	Moduł NSS korzystający z mDNSRespondera
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 
