@@ -4,7 +4,7 @@ Name:		mDNSResponder
 Version:	108
 Release:	6
 License:	APSL
-Group:		Applications
+Group:		Networking/Daemons
 Source0:	http://darwinsource.opendarwin.org/tarballs/apsl/%{name}-%{version}.tar.gz
 # Source0-md5:	645eda2dd5d465b8dabedc3b87e1b31a
 Source1:	mDNSResponder.init
@@ -37,7 +37,7 @@ DNS (stąd też pojawia się określenie 'zero-configuration').
 %package libs
 Summary:	mDNSResponder library
 Summary(pl.UTF-8):	Biblioteka mDNSRespondera
-Group:		Development/Libraries
+Group:		Libraries
 Provides:	mdns-bonjour
 Obsoletes:	avahi-compat-libdns_sd
 Conflicts:	mDNSResponder < 107-2
@@ -65,7 +65,7 @@ Pliki nagłówkowe dla mDNSRespondera.
 %package tools
 Summary:	Tools for mDNSResponder
 Summary(pl.UTF-8):	Narzędzia do mDNSRespondera
-Group:		Development/Libraries
+Group:		Networking/Utilities
 Requires:	%{name}-libs = %{version}-%{release}
 
 %description tools
