@@ -1,0 +1,36 @@
+--- mDNSResponder-576.30.4/mDNSShared/dnsextd_parser.y.orig	2015-11-29 20:59:53.090821801 +0100
++++ mDNSResponder-576.30.4/mDNSShared/dnsextd_parser.y	2015-11-29 21:00:09.160821148 +0100
+@@ -15,6 +15,7 @@
+  * limitations under the License.
+  */
+ 
++%parse-param { void *context };
+ %{
+ #include <stdio.h>
+ #include <stdlib.h>
+@@ -23,7 +24,7 @@
+ #include "DebugServices.h"
+ #include "dnsextd.h"
+ 
+-void yyerror( const char* error );
++void yyerror( void *context, const char* error );
+ int  yylex(void);
+ 
+ 
+@@ -81,7 +82,6 @@
+ static ZoneSpec				g_zoneSpec;
+ static const char		*	g_filename;
+ 
+-#define YYPARSE_PARAM  context
+ 
+ void
+ SetupOptions
+@@ -378,7 +378,7 @@
+ 
+ extern int yylineno;
+ 
+-void yyerror( const char *str )
++void yyerror( void *context, const char *str )
+ {
+         fprintf( stderr,"%s:%d: error: %s\n", g_filename, yylineno, str );
+ }

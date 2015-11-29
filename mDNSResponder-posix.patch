@@ -1,0 +1,25 @@
+--- mDNSResponder-576.30.4/mDNSPosix/mDNSPosix.c.orig	2015-03-13 01:15:32.000000000 +0100
++++ mDNSResponder-576.30.4/mDNSPosix/mDNSPosix.c	2015-11-29 19:03:35.764448066 +0100
+@@ -132,6 +132,22 @@
+     }
+ }
+ 
++mDNSexport void mDNSPlatformSetuDNSSocktOpt(UDPSocket *src, const mDNSAddr *dst, DNSQuestion *q)
++{
++#if 0 // no POSIX compliant options currently
++    if (src)
++    {
++        int s;
++
++        if (dst->type == mDNSAddrType_IPv4)
++            s = src->ss.sktv4;
++        else
++            s = src->ss.sktv6;
++
++    }
++#endif
++}
++
+ #if COMPILER_LIKES_PRAGMA_MARK
+ #pragma mark ***** Send and Receive
+ #endif

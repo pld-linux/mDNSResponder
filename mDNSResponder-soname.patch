@@ -1,37 +1,37 @@
---- mDNSResponder-98/mDNSPosix/Makefile.orig	2005-03-26 18:34:02.017295000 +0100
-+++ mDNSResponder-98/mDNSPosix/Makefile	2005-03-26 18:49:31.538987072 +0100
-@@ -254,6 +254,9 @@
+--- mDNSResponder-576.30.4/mDNSPosix/Makefile.orig	2015-11-29 17:00:33.618091078 +0100
++++ mDNSResponder-576.30.4/mDNSPosix/Makefile	2015-11-29 17:10:11.764733480 +0100
+@@ -106,6 +106,8 @@
+ LD = $(CC) -shared
+ FLEXFLAGS_OS = -l
  JAVACFLAGS_OS += -I$(JDK)/include/linux
- OPTIONALTARG = nss_mdns
- OPTINSTALL   = InstalledNSS
-+LD = $(CC) -shared
 +LIBSONAME = -Wl,-soname=libdns_sd.$(LDSUFFIX).$(LIBVERS)
 +NSSSONAME = -Wl,-soname=$(NSSLINKNAME)
- else
  
- ifeq ($(os),netbsd)
-@@ -404,16 +407,16 @@
+ # uClibc does not support Name Service Switch
+ ifneq ($(os),linux-uclibc)
+@@ -257,8 +259,8 @@
  CLIENTLIBOBJS = $(OBJDIR)/dnssd_clientlib.c.so.o $(OBJDIR)/dnssd_clientstub.c.so.o $(OBJDIR)/dnssd_ipc.c.so.o
  
  $(BUILDDIR)/libdns_sd.$(LDSUFFIX): $(CLIENTLIBOBJS)
--	@$(LD) $(LIBFLAGS) -o $@ $+
+-	@$(LD) $(LINKOPTS) -o $@ $+
 -	@$(STRIP) $@
-+	$(LD) $(LIBSONAME) $(LIBFLAGS) -o $@ $+
++	$(LD) $(LIBSONAME) $(LINKOPTS) -o $@ $+
 +	$(STRIP) $@
  
- # nss_mdns target builds the Name Service Switch module
- nss_mdns: setup $(BUILDDIR)/$(NSSLIBFILE)
+ Clients: setup libdns_sd ../Clients/build/dns-sd
+ 	@echo "Clients done"
+@@ -271,8 +273,8 @@
  	@echo "Name Service Switch module done"
  
  $(BUILDDIR)/$(NSSLIBFILE): $(CLIENTLIBOBJS) $(OBJDIR)/nss_mdns.c.so.o
--	@$(LD) $(LIBFLAGS) -o $@ $+
+-	@$(LD) $(LINKOPTS) -o $@ $+
 -	@$(STRIP) $@
-+	$(LD) $(NSSSONAME) $(LIBFLAGS) -o $@ $+
++	$(LD) $(NSSSONAME) $(LINKOPTS) -o $@ $+
 +	$(STRIP) $@
  
  #############################################################################
  
-@@ -465,11 +468,9 @@
+@@ -347,11 +349,9 @@
  
  $(NSSINSTPATH)/$(NSSLINKNAME): $(NSSINSTPATH)/$(NSSLIBFILE)
  	$(LN) $< $@

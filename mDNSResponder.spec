@@ -1,18 +1,20 @@
 Summary:	Rendezvous - DNS Service Discovery
 Summary(pl.UTF-8):	Rendezvous - wykrywanie usług w oparciu o DNS
 Name:		mDNSResponder
-Version:	108
-Release:	6
-License:	APSL
+Version:	576.30.4
+Release:	1
+License:	Apache v2.0
 Group:		Networking/Daemons
-Source0:	http://darwinsource.opendarwin.org/tarballs/apsl/%{name}-%{version}.tar.gz
-# Source0-md5:	645eda2dd5d465b8dabedc3b87e1b31a
+Source0:	https://opensource.apple.com/tarballs/mDNSResponder/%{name}-%{version}.tar.gz
+# Source0-md5:	940057ac8b513b00e8e9ca12ef796762
 Source1:	mDNSResponder.init
 Patch0:		%{name}-cflags.patch
 Patch1:		%{name}-soname.patch
-Patch2:		%{name}-alpha.patch
+Patch2:		%{name}-posix.patch
 Patch3:		%{name}-spell.patch
-URL:		http://developer.apple.com/darwin/projects/rendezvous/
+Patch4:		%{name}-bison.patch
+URL:		https://developer.apple.com/bonjour/
+BuildRequires:	bison
 Requires(post,preun):	/sbin/chkconfig
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	rc-scripts
@@ -92,6 +94,7 @@ Moduł NSS korzystający z mDNSRespondera.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__make} -C mDNSPosix \
@@ -154,17 +157,21 @@ fi
 
 %files libs
 %defattr(644,root,root,755)
-%doc APPLE_LICENSE README.txt
+%doc LICENSE PrivateDNS.txt README.txt
 %attr(755,root,root) %{_libdir}/libdns_sd.so.1.0.0
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libdns_sd.so
-%{_includedir}/*.h
+%{_includedir}/dns_sd.h
 
 %files tools
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/mDNS*
+%attr(755,root,root) %{_bindir}/mDNSClientPosix
+%attr(755,root,root) %{_bindir}/mDNSIdentify
+%attr(755,root,root) %{_bindir}/mDNSNetMonitor
+%attr(755,root,root) %{_bindir}/mDNSProxyResponderPosix
+%attr(755,root,root) %{_bindir}/mDNSResponderPosix
 
 %files -n nss_mdns
 %defattr(644,root,root,755)
