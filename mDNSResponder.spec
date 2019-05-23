@@ -1,12 +1,12 @@
 Summary:	Rendezvous - DNS Service Discovery
 Summary(pl.UTF-8):	Rendezvous - wykrywanie usług w oparciu o DNS
 Name:		mDNSResponder
-Version:	625.60.4
+Version:	878.200.35
 Release:	1
 License:	Apache v2.0
 Group:		Networking/Daemons
 Source0:	https://opensource.apple.com/tarballs/mDNSResponder/%{name}-%{version}.tar.gz
-# Source0-md5:	f6415d6879e59802e4118c402a4bd10e
+# Source0-md5:	e773f290a7d29f1072247985d6add2ff
 Source1:	mDNSResponder.init
 Patch0:		%{name}-cflags.patch
 Patch1:		%{name}-soname.patch
@@ -98,11 +98,12 @@ Moduł NSS korzystający z mDNSRespondera.
 %{__make} -C mDNSPosix -j1 \
 	os=linux \
 	CC="%{__cc}" \
-	JDK="%{_libdir}/java" \
-	%{?debug:DEBUG=1} \
-	HAVE_IPV6=1 \
 	CFLAGS_DEBUG="%{rpmcflags} -DMDNS_DEBUGMSGS=%{?debug:1}%{!?debug:0}" \
 	CFLAGS_USER="%{rpmcflags}" \
+	%{?debug:DEBUG=1} \
+	HAVE_IPV6=1 \
+	JDK="%{_libdir}/java" \
+	OPTIONALTARG="dnsextd nss_mdns" \
 	STRIP="echo"
 
 %install
