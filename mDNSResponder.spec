@@ -89,10 +89,10 @@ Moduł NSS korzystający z mDNSRespondera.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch3 -p1
-%patch4 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P3 -p1
+%patch -P4 -p1
 
 %build
 %{__make} -C mDNSPosix -j1 \
